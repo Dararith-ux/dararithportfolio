@@ -1,9 +1,11 @@
 import React from 'react'
-import Nav from "./Navigation/Nav"
+import Header from './Header/Header'
+import Body from './Body/Body'
 const App = () => {
   return (
     <div>
-      <Nav/>
+      <Header/>
+      <Body/>
     </div>
   )
 }
