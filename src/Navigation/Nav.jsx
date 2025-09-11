@@ -2,7 +2,7 @@ import React from 'react'
 import Logo from './Logo'
 const Nav = () => {
   return (
-    <div className='flex justify-center items-center '>
+    <div className='flex justify-between items-center '>
       <Logo/>
       <ul className=' py-5 px-10 list-unstyled text-white flex gap-10 font-semibold text-lg '> 
         <li className='cursor-pointer hover:text-gray-500 hover:border-b-2'>Home</li>
