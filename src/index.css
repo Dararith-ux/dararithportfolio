@@ -1,1 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Tektur:wght@400..900&display=swap');
 @import "tailwindcss";
+@theme{
+    --font-tektur: Tektur, "sans-serif";
+}
+@layer utilities {
+  .neon-glow {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.7), 0 0 15px rgba(255, 0, 255, 0.8), 0 0 20px rgba(255, 0, 255, 0.8);
+  }
+}
