@@ -3,7 +3,7 @@ import Lottie from "lottie-react";
 import Animation from "../assets/animation.json";
 const Right = () => {
   return (
-    <div className="flex justify-center ">
+    <div className="flex px-[150px] justify-center">
       <Lottie
         animationData={Animation}
         style={{

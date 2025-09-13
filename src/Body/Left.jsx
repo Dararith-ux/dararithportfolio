@@ -1,8 +1,10 @@
 import React from "react";
-import Button from "../Button/Button";
+import Button from "../assets/Button/Button";
+import Social from "../assets/Button/Social";
+import { faFacebookF, faLinkedin, faLinkedinIn, faTelegram, faTelegramPlane, faTiktok, faXTwitter } from "@fortawesome/free-brands-svg-icons";
 const Left = () => {
   return (
-    <div className="flex justify-center">
+    <div className="flex px-[150px]">
       <div className="flex flex-col gap-4">
         <h1 className="text-6xl font-bold bg-gradient-to-r from-pink-500 to-yellow-500 text-transparent bg-clip-text">
           Frontend
@@ -20,6 +22,13 @@ const Left = () => {
         <div className="flex flex-row gap-5">
           <Button labels="Project" />
           <Button labels="Contacts" />
+        </div>
+        <div className="flex flex-row gap-5">
+          <Social app={faFacebookF}/>
+          <Social app={faTiktok}/>
+          <Social app={faTelegramPlane}/>
+          <Social app={faXTwitter}/>
+          <Social app={faLinkedinIn}/>
         </div>
       </div>
     </div>
