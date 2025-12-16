@@ -29,7 +29,7 @@ const Nav = () => {
   return (
     <div className="flex justify-between items-center">
       <Logo />
-      <ul className="px-10 list-unstyled text-white flex gap-8 font-semibold text-lg">
+      <ul className="px-2 md:px-6 lg:px-10 list-unstyled text-white flex gap-3 md:gap-6 lg:gap-8 font-semibold text-sm md:text-base lg:text-lg">
         {navItems.map((item) => (
           <li
             key={item.id}
@@ -44,7 +44,8 @@ const Nav = () => {
               }
             `}
           >
-            {item.label}
+            <span className="hidden md:inline">{item.label}</span>
+            <span className="md:hidden">{item.label.split(' ')[0]}</span>
             {activeSection === item.id && (
               <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full"></span>
             )}

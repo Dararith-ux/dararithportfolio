@@ -48,22 +48,22 @@ const Intro = () => {
   }, [displayedText, isDeleting, currentPhraseIndex, typingSpeed, phrases]);
 
   return (
-    <div className="flex flex-col pt-20 px-[150px]">
-      <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-700 to-pink-500 bg-clip-text text-transparent">
+    <div className="flex flex-col pt-8 md:pt-12 lg:pt-20 px-4 md:px-8 lg:px-[150px]">
+      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-purple-700 to-pink-500 bg-clip-text text-transparent">
         Hello, I am
       </h1>
-      <h1 className="text-5xl font-bold text-white uppercase pt-3 min-h-[4rem]">
+      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white uppercase pt-2 md:pt-3 min-h-[3rem] md:min-h-[4rem]">
         {displayedText}
         <span className="animate-pulse">|</span>
       </h1>
-      <p className="text-gray-300 font-normal text-xl pt-4">
-        I’m a dedicated Computer Science student at AUPP with a passion for
-        technology, leadership,community development, and cultural exchange. I
-        learn quickly, solve problems creatively, andthrive in dynamic
+      <p className="text-gray-300 font-normal text-base md:text-lg lg:text-xl pt-3 md:pt-4">
+        I'm a dedicated Computer Science student at AUPP with a passion for
+        technology, leadership, community development, and cultural exchange. I
+        learn quickly, solve problems creatively, and thrive in dynamic
         environments. I always give my best, support my team, and aim to make
-        ameaningful impact.
+        a meaningful impact.
       </p>
-      <div className="pt-4">
+      <div className="pt-3 md:pt-4">
         <a href={MYCV} download="DararithCV.pdf">
           <Button labels="Download CV" icons={faFile}/>
         </a>

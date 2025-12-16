@@ -3,7 +3,7 @@ import Left from  './Left'
 import Right from './Right'
 const Body = () => {
   return (
-    <div id="home" className='grid grid-cols-2 gap-20 justify-center items-center h-[100vh]'>
+    <div id="home" className='grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-20 justify-center items-center min-h-[100vh] px-4 md:px-8 lg:px-0 pt-20 lg:pt-0'>
       <Left/>
       <Right/>
     </div>

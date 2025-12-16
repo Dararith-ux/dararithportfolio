@@ -74,34 +74,92 @@ const EduTree = () => {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-2 md:px-4 py-4 md:py-8">
       {/* Roadmap Container */}
       <div className="relative max-w-6xl mx-auto">
         {/* Start Node */}
-        <div className="flex justify-center mb-16">
-          <div className="bg-gradient-to-r from-amber-600 to-amber-800 text-white px-10 py-5 rounded-full shadow-2xl text-center">
-            <h2 className="text-3xl font-bold">🎓 Education Journey</h2>
-            <p className="text-sm mt-2">Click to explore each milestone</p>
+        <div className="flex justify-center mb-8 md:mb-12 lg:mb-16">
+          <div className="bg-gradient-to-r from-amber-600 to-amber-800 text-white px-6 md:px-8 lg:px-10 py-3 md:py-4 lg:py-5 rounded-full shadow-2xl text-center">
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold">🎓 Education Journey</h2>
+            <p className="text-xs md:text-sm mt-1 md:mt-2">Click to explore each milestone</p>
           </div>
         </div>
 
-        {/* Vertical Timeline Line */}
-        <div className="absolute left-1/2 top-40 bottom-20 w-1 bg-gradient-to-b from-amber-600 via-amber-500 to-amber-700 transform -translate-x-1/2"></div>
+        {/* Vertical Timeline Line - Center on all screens */}
+        <div className="absolute left-1/2 top-32 lg:top-40 bottom-20 w-1 bg-gradient-to-b from-amber-600 via-amber-500 to-amber-700 transform -translate-x-1/2"></div>
 
-        {/* Roadmap Items - Alternating Left and Right */}
-        <div className="space-y-12">
+        {/* Roadmap Items - Centered on mobile, Alternating on desktop */}
+        <div className="space-y-6 md:space-y-12">
           {educationData.map((edu, index) => {
             const isLeft = index % 2 === 0;
 
             return (
               <div
                 key={edu.id}
-                className="relative flex items-center justify-between"
+                className="relative flex items-center justify-center md:justify-between"
               >
-                {/* Left Side Content */}
+                {/* Mobile Layout - Centered with node in middle */}
+                <div className="md:hidden w-full max-w-md">
+                  <div className="relative flex flex-col items-center">
+                    {/* Timeline Node */}
+                    <div className="relative mb-4">
+                      <div className={`w-6 h-6 rounded-full bg-gradient-to-br ${edu.color} shadow-xl border-2 border-white z-10`}></div>
+                      <div className={`absolute inset-0 w-6 h-6 rounded-full bg-gradient-to-br ${edu.color} animate-ping opacity-40`}></div>
+                    </div>
+
+                    {/* Content Card */}
+                    <div className="w-full px-4">
+                      <div
+                        className={`relative bg-gradient-to-br ${edu.color} rounded-xl shadow-2xl p-4 cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-2xl`}
+                        onClick={() => toggleBranch(edu.id)}
+                      >
+                        {/* Decorative Corner */}
+                        <div className="absolute top-0 right-0 w-16 h-16 bg-white opacity-10 rounded-bl-full"></div>
+
+                        {/* Content */}
+                        <div className="relative z-10">
+                          <div className="flex items-center justify-between mb-2">
+                            <h3 className="text-lg font-bold text-white">{edu.level}</h3>
+                            <button className="text-white text-2xl font-bold">
+                              {expandedBranches[edu.id] ? "−" : "+"}
+                            </button>
+                          </div>
+
+                          <div className="text-white text-opacity-95 space-y-2">
+                            <p className="font-bold text-base">{edu.institution}</p>
+                            <p className="text-xs opacity-90">{edu.period}</p>
+
+                            {expandedBranches[edu.id] && (
+                              <div className="mt-3 space-y-2 animate-fadeIn">
+                                <div className="border-t border-white border-opacity-40 pt-2">
+                                  <p className="text-xs font-medium">
+                                    <span className="opacity-80">Degree:</span> {edu.degree}
+                                  </p>
+                                  <p className="text-xs font-medium mt-2">
+                                    <span className="opacity-80">Field:</span> {edu.field}
+                                  </p>
+                                  <p className="text-xs mt-2 italic opacity-95 leading-relaxed">
+                                    {edu.description}
+                                  </p>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Emoji Decoration */}
+                        <div className="absolute bottom-2 right-2 text-white text-opacity-30 text-3xl">
+                          {index === 0 ? "🎓" : index === 2 ? "📜" : index === 4 ? "🚀" : "🌟"}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Desktop Layout - Alternating Left and Right */}
                 {isLeft ? (
                   <>
-                    <div className="w-[45%]">
+                    <div className="hidden md:block w-[45%]">
                       <div
                         className={`relative bg-gradient-to-br ${edu.color} rounded-2xl shadow-2xl p-6 cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:-translate-y-1`}
                         onClick={() => toggleBranch(edu.id)}

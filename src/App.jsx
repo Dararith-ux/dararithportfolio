@@ -5,6 +5,7 @@ import Aboutme from './Aboutme/Aboutme'
 import Edu from './Edu/Edu'
 import Showcase from './Showcase/Showcase'
 import AnimatedBackground from './assets/Background/AnimatedBackground'
+
 const App = () => {
   return (
     <div className="relative">

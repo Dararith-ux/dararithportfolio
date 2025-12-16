@@ -29,26 +29,26 @@ const Aboutme = () => {
   }, []);
 
   return (
-    <div id="about" className="h-[100vh]">
+    <div id="about" className="min-h-[100vh] py-10 md:py-16 lg:py-0 px-4 md:px-8">
       <div
         ref={(el) => (elementRefs.current[0] = el)}
-        className={`pt-20 flex flex-col items-center transition-all duration-700 ${
+        className={`pt-10 md:pt-16 lg:pt-20 flex flex-col items-center transition-all duration-700 ${
           visibleElements.includes(0)
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-10"
         }`}
       >
         <Title title="About me" />
-        <div className="flex flex-row items-center justify-center gap-3 pt-2">
-          <Lottie animationData={Rocket} style={{ width: "80px" }} />
-          <p className="text-white text-lg font-normal">
+        <div className="flex flex-row items-center justify-center gap-2 md:gap-3 pt-2 max-w-4xl px-4">
+          <Lottie animationData={Rocket} className="w-12 md:w-16 lg:w-20 flex-shrink-0" />
+          <p className="text-white text-sm md:text-base lg:text-lg font-normal text-center">
             A tech-guy driven by curiosity, innovation, and an ideal passion for
             shaping the digital future.
           </p>
-          <Lottie animationData={Rocket} style={{ width: "80px" }} />
+          <Lottie animationData={Rocket} className="w-12 md:w-16 lg:w-20 flex-shrink-0" />
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-20 justify-center items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-20 justify-center items-center mt-8 lg:mt-0">
         <div
           ref={(el) => (elementRefs.current[1] = el)}
           className={`transition-all duration-700 ${

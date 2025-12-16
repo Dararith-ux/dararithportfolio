@@ -20,10 +20,10 @@ const Mypf = () => {
   ];
 
   return (
-    <div className="flex justify-center items-center w-full pt-20 relative">
-      <div className="absolute w-80 h-80 rounded-full bg-gradient-to-r from-purple-600/30 to-pink-600/30 blur-3xl animate-pulse" />
+    <div className="flex justify-center items-center w-full pt-8 md:pt-12 lg:pt-20 relative">
+      <div className="absolute w-60 h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full bg-gradient-to-r from-purple-600/30 to-pink-600/30 blur-3xl animate-pulse" />
 
-      <div className="relative">
+      <div className="relative scale-75 md:scale-90 lg:scale-100">
         {/* Floating Tech Icons */}
         {techIcons.map(({ Icon, color, position, delay }, index) => (
           <div

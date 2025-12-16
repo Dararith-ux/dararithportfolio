@@ -36,17 +36,17 @@ const Showcase = () => {
   ];
 
   return (
-    <div id="showcase" className="min-h-[100vh] py-20 px-8">
+    <div id="showcase" className="min-h-[100vh] py-10 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8">
       <div
         ref={(el) => (elementRefs.current[0] = el)}
-        className={`flex flex-col items-center mb-12 transition-all duration-700 ${
+        className={`flex flex-col items-center mb-8 md:mb-10 lg:mb-12 transition-all duration-700 ${
           visibleElements.includes(0)
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-10"
         }`}
       >
         <Title title="My Showcase" />
-        <p className="text-white text-lg font-normal mt-4">
+        <p className="text-white text-sm md:text-base lg:text-lg font-normal mt-3 md:mt-4 text-center px-4">
           Explore my projects, certifications, and technical expertise
         </p>
       </div>
@@ -55,7 +55,7 @@ const Showcase = () => {
       <div className="max-w-6xl mx-auto">
         <div
           ref={(el) => (elementRefs.current[1] = el)}
-          className={`grid grid-cols-3 gap-4 mb-8 transition-all duration-700 ${
+          className={`grid grid-cols-3 gap-2 md:gap-3 lg:gap-4 mb-6 md:mb-8 transition-all duration-700 ${
             visibleElements.includes(1)
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-10"
@@ -67,7 +67,7 @@ const Showcase = () => {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`
-                relative py-6 px-8 rounded-xl font-bold text-xl
+                relative py-3 md:py-4 lg:py-6 px-3 md:px-6 lg:px-8 rounded-lg md:rounded-xl font-bold text-sm md:text-base lg:text-xl
                 transition-all duration-300 transform
                 ${
                   activeTab === tab.id
@@ -78,8 +78,8 @@ const Showcase = () => {
             >
               {/* Active indicator */}
               {activeTab === tab.id && (
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-2">
-                  <div className="w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-white"></div>
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1 md:translate-y-2">
+                  <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 md:border-l-8 md:border-r-8 md:border-t-8 border-l-transparent border-r-transparent border-t-white"></div>
                 </div>
               )}
               {tab.label}
@@ -90,7 +90,7 @@ const Showcase = () => {
         {/* Content Display Area */}
         <div
           ref={(el) => (elementRefs.current[2] = el)}
-          className={`bg-gray-800/30 backdrop-blur-md rounded-2xl p-8 min-h-[500px] border border-gray-700/50 shadow-xl transition-all duration-700 ${
+          className={`bg-gray-800/30 backdrop-blur-md rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 min-h-[400px] md:min-h-[500px] border border-gray-700/50 shadow-xl transition-all duration-700 ${
             visibleElements.includes(2)
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-10"
