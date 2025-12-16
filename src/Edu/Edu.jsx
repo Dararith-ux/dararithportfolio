@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import Lottie from "lottie-react";
 import Title from "../assets/Title/Title";
 import Rocket from "../assets/Rocket.json";
-import Intro from "./Intro";
-import Mypf from './Mypf'
-const Aboutme = () => {
+import EduTree from "./EduTree";
+
+const Edu = () => {
   const [visibleElements, setVisibleElements] = useState([]);
   const elementRefs = useRef([]);
 
@@ -29,51 +29,37 @@ const Aboutme = () => {
   }, []);
 
   return (
-    <div id="about" className="h-[100vh]">
+    <div id="education" className="min-h-[100vh] py-20">
       <div
         ref={(el) => (elementRefs.current[0] = el)}
-        className={`pt-20 flex flex-col items-center transition-all duration-700 ${
+        className={`flex flex-col items-center transition-all duration-700 ${
           visibleElements.includes(0)
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-10"
         }`}
       >
-        <Title title="About me" />
+        <Title title="Educational Background" />
         <div className="flex flex-row items-center justify-center gap-3 pt-2">
           <Lottie animationData={Rocket} style={{ width: "80px" }} />
           <p className="text-white text-lg font-normal">
-            A tech-guy driven by curiosity, innovation, and an ideal passion for
-            shaping the digital future.
+            My journey through knowledge and learning
           </p>
           <Lottie animationData={Rocket} style={{ width: "80px" }} />
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-20 justify-center items-center">
-        <div
-          ref={(el) => (elementRefs.current[1] = el)}
-          className={`transition-all duration-700 ${
-            visibleElements.includes(1)
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-10"
-          }`}
-          style={{ transitionDelay: "200ms" }}
-        >
-          <Intro />
-        </div>
-        <div
-          ref={(el) => (elementRefs.current[2] = el)}
-          className={`transition-all duration-700 ${
-            visibleElements.includes(2)
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-10"
-          }`}
-          style={{ transitionDelay: "400ms" }}
-        >
-          <Mypf/>
-        </div>
+      <div
+        ref={(el) => (elementRefs.current[1] = el)}
+        className={`mt-16 transition-all duration-700 ${
+          visibleElements.includes(1)
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-10"
+        }`}
+        style={{ transitionDelay: "200ms" }}
+      >
+        <EduTree />
       </div>
     </div>
   );
 };
 
-export default Aboutme;
+export default Edu;

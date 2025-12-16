@@ -1,25 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 import Logo from "./Logo";
+
 const Nav = () => {
+  const [activeSection, setActiveSection] = useState("home");
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 80; // Height of navbar
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+      setActiveSection(sectionId);
+    }
+  };
+
+  const navItems = [
+    { id: "home", label: "Home" },
+    { id: "about", label: "About Me" },
+    { id: "education", label: "Education" },
+    { id: "showcase", label: "Showcase" },
+  ];
+
   return (
     <div className="flex justify-between items-center">
       <Logo />
-      <ul className="px-10 list-unstyled text-white flex gap-10 font-semibold text-lg">
-        <li className="cursor-pointer hover:text-gray-500 border-b-2 border-transparent hover:border-gray-500">
-          Home
-        </li>
-        <li className="cursor-pointer hover:text-gray-500 border-b-2 border-transparent hover:border-gray-500">
-          About me
-        </li>
-        <li className="cursor-pointer hover:text-gray-500 border-b-2 border-transparent hover:border-gray-500">
-          Academic
-        </li>
-        <li className="cursor-pointer hover:text-gray-500 border-b-2 border-transparent hover:border-gray-500">
-          Experience
-        </li>
-        <li className="cursor-pointer hover:text-gray-500 border-b-2 border-transparent hover:border-gray-500">
-          Project
-        </li>
+      <ul className="px-10 list-unstyled text-white flex gap-8 font-semibold text-lg">
+        {navItems.map((item) => (
+          <li
+            key={item.id}
+            onClick={() => scrollToSection(item.id)}
+            className={`
+              cursor-pointer transition-all duration-300 relative
+              border-b-2 pb-1
+              ${
+                activeSection === item.id
+                  ? "text-purple-400 border-purple-400"
+                  : "text-white border-transparent hover:text-purple-300 hover:border-purple-300"
+              }
+            `}
+          >
+            {item.label}
+            {activeSection === item.id && (
+              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full"></span>
+            )}
+          </li>
+        ))}
       </ul>
     </div>
   );
