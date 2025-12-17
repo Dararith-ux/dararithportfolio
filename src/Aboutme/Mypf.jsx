@@ -1,5 +1,5 @@
 import React from "react";
-import mypf from "../assets/image.png";
+import mypf from "../assets/Pfp.jpg";
 import { FaPython, FaJsSquare, FaReact, FaNode, FaHtml5, FaCss3Alt, FaGitAlt, FaDocker, FaJava } from "react-icons/fa";
 import { SiTypescript, SiTailwindcss, SiCplusplus } from "react-icons/si";
 
