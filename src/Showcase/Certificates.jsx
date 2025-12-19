@@ -3,6 +3,7 @@ import ReactCert from "../assets/Certificate/React.jpg";
 import PythonGettingStart from "../assets/Certificate/Gettingstartwithpython.jpg";
 import PythonWebData from "../assets/Certificate/pythonaccessweb.jpg";
 import PythonDataStructures from "../assets/Certificate/pythondatastructure.jpg";
+import awscloud from "../assets/Certificate/cloud.jpg";
 const Certificates = () => {
   const [selectedCert, setSelectedCert] = useState(null);
   const [visibleCards, setVisibleCards] = useState([]);
@@ -11,12 +12,13 @@ const Certificates = () => {
   const certificates = [
     {
       id: 1,
-      title: "AWS Cloud Practitioner",
-      issuer: "Amazon Web Services",
+      title: "AWS Cloud Practitioner Completion",
+      issuer: "C4C Cambodia",
       date: "2024",
       verifyLink: "#", // Replace with actual verification link
-      thumbnail: "path/to/aws-cert-thumbnail.jpg", // Replace with your actual image path
-      fullImage: "path/to/aws-cert-full.jpg", // Replace with your actual image path
+      thumbnail: awscloud,
+      fullImage: awscloud,
+      rotate: true, // Rotate 90 degrees clockwise
     },
     {
       id: 2,
@@ -92,7 +94,7 @@ const Certificates = () => {
             key={cert.id}
             ref={(el) => (cardRefs.current[index] = el)}
             onClick={() => openModal(cert)}
-            className={`bg-gradient-to-br from-blue-900/30 to-cyan-900/30 rounded-xl overflow-hidden border border-blue-500/30 hover:border-cyan-400 transition-all duration-700 hover:scale-105 hover:shadow-2xl cursor-pointer transform ${
+            className={`bg-gradient-to-br from-blue-900/30 to-cyan-900/30 rounded-xl overflow-hidden border border-blue-500/30 hover:border-cyan-400 transition-all duration-200 hover:scale-105 hover:shadow-2xl cursor-pointer transform ${
               visibleCards.includes(index)
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-10"
@@ -100,11 +102,11 @@ const Certificates = () => {
             style={{ transitionDelay: `${index * 100}ms` }}
           >
             {/* Thumbnail Image */}
-            <div className="relative h-48 bg-gray-800/50 overflow-hidden">
+            <div className="relative h-48 bg-gray-800/50 overflow-hidden flex items-center justify-center">
               <img
                 src={cert.thumbnail}
                 alt={cert.title}
-                className="w-full h-full object-cover"
+                className={`${cert.rotate ? "rotate-90 min-w-[100%] min-h-[100%] object-cover" : "w-full h-full object-cover"}`}
                 onError={(e) => {
                   e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23374151' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-size='20' fill='%239CA3AF'%3ECertificate%3C/text%3E%3C/svg%3E";
                 }}
@@ -145,7 +147,7 @@ const Certificates = () => {
               <img
                 src={selectedCert.fullImage}
                 alt={selectedCert.title}
-                className="w-full h-auto max-h-[60vh] object-contain"
+                className={`w-full h-auto max-h-[60vh] object-contain ${selectedCert.rotate ? "rotate-90" : ""}`}
                 onClick={(e) => e.stopPropagation()}
                 onError={(e) => {
                   e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Crect fill='%23374151' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-size='24' fill='%239CA3AF'%3ECertificate Image%3C/text%3E%3C/svg%3E";

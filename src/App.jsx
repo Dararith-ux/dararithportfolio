@@ -4,6 +4,7 @@ import Body from './Body/Body'
 import Aboutme from './Aboutme/Aboutme'
 import Edu from './Edu/Edu'
 import Showcase from './Showcase/Showcase'
+import Experience from './Experience/Experience'
 import AnimatedBackground from './assets/Background/AnimatedBackground'
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
         <Aboutme/>
         <Edu/>
         <Showcase/>
+        <Experience/>
       </div>
     </div>
   )

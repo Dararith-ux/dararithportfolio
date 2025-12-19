@@ -24,6 +24,7 @@ const Nav = () => {
     { id: "about", label: "About Me" },
     { id: "education", label: "Education" },
     { id: "showcase", label: "Showcase" },
+    { id: "experience", label: "Experience" },
   ];
 
   return (
