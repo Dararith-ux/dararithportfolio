@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import amccert from "../assets/Certificate/amc.jpg";
 import moscmerit from "../assets/Certificate/moscmerit.jpg";
 import moscsilver from "../assets/Certificate/moscsilver.jpg";
@@ -6,6 +7,10 @@ import physicprovincialround from "../assets/Certificate/physicprovincialround.j
 import physicnationalround from "../assets/Certificate/physicnationalroundparticipation.jpg";
 import physicsbronze from "../assets/Certificate/physicsbronze.jpg";
 import bacII from "../assets/Certificate/bacII.jpg";
+import prg from "../assets/Certificate/prg.png";
+import amt from "../assets/Certificate/amt.png";
+import rupp from "../assets/Certificate/rupp.png";
+import aupp from "../assets/Certificate/aupp.jpg";
 const Achievement = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -76,25 +81,63 @@ const Achievement = () => {
       thumbnail: bacII,
       images: [bacII],
     },
+    {
+      id: 8,
+      title: "Fully Funded Scholarship at Paragon International University",
+      organization: "MoEYS Cambodia & Paragon International University",
+      date: "2023",
+      description: "Awarded a fully funded scholarship through the Ministry of Education, Youth and Sport (MoEYS) to study at Paragon International University, in recognition of achieving a Bronze Medal and demonstrating strong academic excellence and potential.",
+      thumbnail: prg,
+      images: [prg],
+    },
+    {
+      id: 9,
+      title: "Fully Funded Scholarship at Institute of Technology of Cambodia",
+      organization: "AMT",
+      date: "2024",
+      description: "Awarded a fully funded scholarship through the AMT Association to study at the Institute of Technology of Cambodia (ITC), based on competitive evaluation through the ITC entrance examination.",
+      thumbnail: amt,
+      images: [amt],
+    },
+    {
+      id: 10,
+      title: "Fully Funded Scholarship at Royal University of Phnom Penh",
+      organization: "MoEYS Cambodia",
+      date: "2024",
+      description: "Awarded a fully funded scholarship through the Ministry of Education, Youth and Sport (MoEYS) to study at the Royal University of Phnom Penh, in recognition of achieving a Bronze Medal at the National Outstanding Student Examination.",
+      thumbnail: rupp,
+      images: [rupp],
+    },
+    {
+      id: 11,
+      title: "Fully Funded Scholarship at American University of Phnom Penh",
+      organization: "Ministry of Post and Telecommunications Cambodia",
+      date: "2024",
+      description: "Awarded a fully funded scholarship through the Ministry of Post and Telecommunications to study at the American University of Phnom Penh, after successfully passing the Digital Techo Talent scholarship examination.",
+      thumbnail: aupp,
+      images: [aupp],
+    },
   ];
 
   useEffect(() => {
-    const observers = cardRefs.current.map((ref, index) => {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setVisibleCards((prev) => [...new Set([...prev, index])]);
-          }
-        },
-        { threshold: 0.1 }
-      );
+    // Show all cards at once when section becomes visible
+    const sectionObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Show all cards immediately
+          setVisibleCards(achievements.map((_, i) => i));
+        }
+      },
+      { threshold: 0.05 }
+    );
 
-      if (ref) observer.observe(ref);
-      return observer;
-    });
+    // Observe the first card as a proxy for section visibility
+    if (cardRefs.current[0]) {
+      sectionObserver.observe(cardRefs.current[0]);
+    }
 
     return () => {
-      observers.forEach((observer) => observer.disconnect());
+      sectionObserver.disconnect();
     };
   }, []);
 
@@ -128,22 +171,66 @@ const Achievement = () => {
 
   return (
     <>
-      <div className="flex flex-col gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-1 gap-2 md:gap-4">
         {achievements.map((item, index) => (
           <div
             key={item.id}
             ref={(el) => (cardRefs.current[index] = el)}
             onClick={() => openModal(item)}
-            className={`bg-gradient-to-r from-amber-900/30 to-orange-900/30 rounded-xl overflow-hidden border border-amber-500/30 hover:border-orange-400 transition-all duration-200 hover:scale-[1.02] hover:shadow-2xl cursor-pointer transform ${
+            className={`bg-gradient-to-br md:bg-gradient-to-r from-amber-900/30 to-orange-900/30 rounded-lg md:rounded-xl overflow-hidden border border-amber-500/30 hover:border-orange-400 transition-all duration-150 hover:scale-[1.02] hover:shadow-xl md:hover:shadow-2xl cursor-pointer transform ${
               visibleCards.includes(index)
-                ? "opacity-100 translate-x-0"
-                : "opacity-0 -translate-x-10"
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-5"
             }`}
-            style={{ transitionDelay: `${index * 100}ms` }}
+            style={{ transitionDelay: `${Math.min(index * 50, 300)}ms` }}
           >
-            <div className="flex flex-col md:flex-row">
+            {/* Mobile: Card layout (vertical) */}
+            <div className="flex flex-col md:hidden">
               {/* Thumbnail */}
-              <div className="w-full md:w-48 h-32 md:h-auto bg-gray-800/50 flex-shrink-0 overflow-hidden">
+              <div className="w-full h-24 bg-gray-800/50 overflow-hidden">
+                {item.thumbnail ? (
+                  <img
+                    src={item.thumbnail}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-900/50 to-orange-900/50">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-8 w-8 text-amber-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+                      />
+                    </svg>
+                  </div>
+                )}
+              </div>
+              {/* Content */}
+              <div className="p-2 flex flex-col gap-1">
+                <h3 className="text-xs font-bold text-white line-clamp-2 leading-tight">
+                  {item.title}
+                </h3>
+                <p className="text-amber-300 font-medium text-[10px] truncate">
+                  {item.organization}
+                </p>
+                <div className="flex items-center justify-between mt-1">
+                  <span className="text-gray-400 text-[10px]">{item.date}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop: Horizontal layout */}
+            <div className="hidden md:flex md:flex-row">
+              {/* Thumbnail */}
+              <div className="w-48 bg-gray-800/50 flex-shrink-0 overflow-hidden">
                 {item.thumbnail ? (
                   <img
                     src={item.thumbnail}
@@ -171,18 +258,18 @@ const Achievement = () => {
               </div>
 
               {/* Content */}
-              <div className="flex-1 p-4 md:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-4">
-                <div className="flex-1">
-                  <h3 className="text-lg md:text-xl font-bold text-white mb-1">
+              <div className="flex-1 p-5 flex flex-row items-center justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-xl font-bold text-white mb-1">
                     {item.title}
                   </h3>
-                  <p className="text-amber-300 font-medium text-sm md:text-base">
+                  <p className="text-amber-300 font-medium text-base truncate">
                     {item.organization}
                   </p>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 flex-shrink-0">
                   <span className="text-gray-400 text-sm">{item.date}</span>
-                  <div className="bg-amber-500/20 text-amber-400 px-3 py-1 rounded-full text-xs font-bold">
+                  <div className="bg-amber-500/20 text-amber-400 px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap">
                     Achievement
                   </div>
                 </div>
@@ -193,25 +280,26 @@ const Achievement = () => {
       </div>
 
       {/* Modal for Achievement Details */}
-      {selectedItem && (
+      {selectedItem && createPortal(
         <div
-          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/80 z-[9999] flex items-center justify-center p-4"
           onClick={closeModal}
         >
           <div className="relative max-w-3xl w-full max-h-[85vh] overflow-auto">
-            {/* Close Button */}
-            <button
-              onClick={closeModal}
-              className="absolute -top-10 right-0 text-white text-3xl hover:text-amber-400 transition-colors z-10"
-            >
-              ✕
-            </button>
-
             {/* Achievement Details Card */}
             <div
-              className="bg-gray-900 rounded-xl overflow-hidden border border-amber-500/50 shadow-2xl"
+              className="bg-gray-900 rounded-xl overflow-hidden border border-amber-500/50 shadow-2xl relative"
               onClick={(e) => e.stopPropagation()}
             >
+              {/* Close Button */}
+              <button
+                onClick={closeModal}
+                className="absolute top-3 right-3 bg-black/50 hover:bg-black/70 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors z-20"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
               {/* Image Gallery */}
               {selectedItem.images && selectedItem.images.length > 0 ? (
                 <div className="relative bg-gray-800">
@@ -309,7 +397,8 @@ const Achievement = () => {
               Click anywhere to close
             </p>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );

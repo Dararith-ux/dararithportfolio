@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import ReactCert from "../assets/Certificate/React.jpg";
 import PythonGettingStart from "../assets/Certificate/Gettingstartwithpython.jpg";
 import PythonWebData from "../assets/Certificate/pythonaccessweb.jpg";
 import PythonDataStructures from "../assets/Certificate/pythondatastructure.jpg";
 import awscloud from "../assets/Certificate/cloud.jpg";
+import solidedge from "../assets/Certificate/solidedge.jpg";
 const Certificates = () => {
   const [selectedCert, setSelectedCert] = useState(null);
   const [visibleCards, setVisibleCards] = useState([]);
@@ -15,10 +17,9 @@ const Certificates = () => {
       title: "AWS Cloud Practitioner Completion",
       issuer: "C4C Cambodia",
       date: "2024",
-      verifyLink: "#", // Replace with actual verification link
+      verifyLink: "https://www.credly.com/badges/827352df-34a1-4029-a88c-6eea599bcbca/public_url", // Replace with actual verification link
       thumbnail: awscloud,
       fullImage: awscloud,
-      rotate: true, // Rotate 90 degrees clockwise
     },
     {
       id: 2,
@@ -55,6 +56,15 @@ const Certificates = () => {
       verifyLink: "https://coursera.org/share/75fdb99a50d1d68d351934934e0b4eca", // Replace with actual verification link
       thumbnail: PythonDataStructures,
       fullImage: PythonDataStructures,
+    },
+    {
+      id: 6,
+      title: "Solid Edge Associate Level Certification Program",
+      issuer: "SIEMENS",
+      date: "2024",
+      verifyLink: "https://www.credly.com/badges/1e731677-e2a6-4b95-a179-d01ad4ec79f4/public_url", // Replace with actual verification link
+      thumbnail: solidedge,
+      fullImage: solidedge,
     },
   ];
 
@@ -128,22 +138,23 @@ const Certificates = () => {
       </div>
 
       {/* Modal for Certificate Image */}
-      {selectedCert && (
+      {selectedCert && createPortal(
         <div
-          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/80 z-[9999] flex items-center justify-center p-4"
           onClick={closeModal}
         >
           <div className="relative max-w-3xl w-full max-h-[85vh] overflow-auto">
-            {/* Close Button */}
-            <button
-              onClick={closeModal}
-              className="absolute -top-10 right-0 text-white text-3xl hover:text-cyan-400 transition-colors z-10"
-            >
-              ✕
-            </button>
-
             {/* Certificate Image Card */}
-            <div className="bg-gray-900 rounded-xl overflow-hidden border border-cyan-500/50 shadow-2xl">
+            <div className="bg-gray-900 rounded-xl overflow-hidden border border-cyan-500/50 shadow-2xl relative">
+              {/* Close Button */}
+              <button
+                onClick={closeModal}
+                className="absolute top-3 right-3 bg-black/50 hover:bg-black/70 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors z-20"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
               <img
                 src={selectedCert.fullImage}
                 alt={selectedCert.title}
@@ -193,7 +204,8 @@ const Certificates = () => {
               Click anywhere to close
             </p>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
