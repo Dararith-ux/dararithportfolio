@@ -134,48 +134,48 @@ const Nav = () => {
         onClick={() => setIsMenuOpen(false)}
       />
 
-      {/* Mobile Menu Panel */}
+      {/* Mobile Menu Panel - Minimized with blur */}
       <div
-        className={`fixed top-0 right-0 h-full w-72 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 z-40 md:hidden transform transition-transform duration-300 ease-out shadow-2xl ${
-          isMenuOpen ? "translate-x-0" : "translate-x-full"
+        className={`fixed top-0 right-0 h-auto max-h-[85vh] w-56 bg-gray-900/70 backdrop-blur-xl z-40 md:hidden transform transition-all duration-300 ease-out shadow-2xl rounded-bl-2xl border-l border-b border-gray-700/30 ${
+          isMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
         }`}
       >
         {/* Menu Header */}
-        <div className="p-6 pt-20 border-b border-gray-700/50">
-          <h2 className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-            Navigation
+        <div className="p-4 pt-16 border-b border-gray-700/30">
+          <h2 className="text-base font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+            Menu
           </h2>
         </div>
 
         {/* Menu Items */}
-        <ul className="flex flex-col p-4">
+        <ul className="flex flex-col p-3">
           {navItems.map((item, index) => (
             <li
               key={item.id}
               onClick={() => scrollToSection(item.id)}
               className={`
-                cursor-pointer py-4 px-4 rounded-xl mb-2
+                cursor-pointer py-3 px-3 rounded-lg mb-1
                 transition-all duration-300 transform
                 ${isMenuOpen ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"}
                 ${
                   activeSection === item.id
-                    ? "bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-400 border-l-4 border-purple-400"
-                    : "text-white hover:bg-white/5 hover:translate-x-2"
+                    ? "bg-purple-500/20 text-purple-400 border-l-2 border-purple-400"
+                    : "text-white/90 hover:bg-white/10 hover:translate-x-1"
                 }
               `}
               style={{
-                transitionDelay: isMenuOpen ? `${index * 75}ms` : "0ms",
+                transitionDelay: isMenuOpen ? `${index * 50}ms` : "0ms",
               }}
             >
-              <span className="font-medium text-lg">{item.label}</span>
+              <span className="font-medium text-sm">{item.label}</span>
             </li>
           ))}
         </ul>
 
         {/* Menu Footer */}
-        <div className="absolute bottom-8 left-0 right-0 px-6">
-          <div className="h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent mb-4"></div>
-          <p className="text-gray-500 text-sm text-center">Dararith Portfolio</p>
+        <div className="px-4 pb-4 pt-2">
+          <div className="h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent mb-3"></div>
+          <p className="text-gray-500 text-xs text-center">Dararith</p>
         </div>
       </div>
     </div>
