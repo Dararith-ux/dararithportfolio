@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo, useCallback, memo } from "react";
 import { createPortal } from "react-dom";
 import amccert from "../assets/Certificate/amc.jpg";
 import moscmerit from "../assets/Certificate/moscmerit.jpg";
@@ -11,7 +11,8 @@ import prg from "../assets/Certificate/prg.png";
 import amt from "../assets/Certificate/amt.png";
 import rupp from "../assets/Certificate/rupp.png";
 import aupp from "../assets/Certificate/aupp.jpg";
-const Achievement = () => {
+
+const Achievement = memo(() => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState([]);
@@ -141,33 +142,33 @@ const Achievement = () => {
     };
   }, []);
 
-  const openModal = (item) => {
+  const openModal = useCallback((item) => {
     setSelectedItem(item);
     setCurrentImageIndex(0);
-  };
+  }, []);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setSelectedItem(null);
     setCurrentImageIndex(0);
-  };
+  }, []);
 
-  const nextImage = (e) => {
+  const nextImage = useCallback((e) => {
     e.stopPropagation();
     if (selectedItem && selectedItem.images.length > 0) {
       setCurrentImageIndex((prev) =>
         prev === selectedItem.images.length - 1 ? 0 : prev + 1
       );
     }
-  };
+  }, [selectedItem]);
 
-  const prevImage = (e) => {
+  const prevImage = useCallback((e) => {
     e.stopPropagation();
     if (selectedItem && selectedItem.images.length > 0) {
       setCurrentImageIndex((prev) =>
         prev === 0 ? selectedItem.images.length - 1 : prev - 1
       );
     }
-  };
+  }, [selectedItem]);
 
   return (
     <>
@@ -193,6 +194,8 @@ const Achievement = () => {
                     src={item.thumbnail}
                     alt={item.title}
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-900/50 to-orange-900/50">
@@ -236,6 +239,8 @@ const Achievement = () => {
                     src={item.thumbnail}
                     alt={item.title}
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-900/50 to-orange-900/50">
@@ -402,6 +407,8 @@ const Achievement = () => {
       )}
     </>
   );
-};
+});
+
+Achievement.displayName = 'Achievement';
 
 export default Achievement;

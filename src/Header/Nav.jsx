@@ -1,23 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Logo from "./Logo";
 
 const Nav = () => {
   const [activeSection, setActiveSection] = useState("home");
-
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const offset = 80; // Height of navbar
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-      setActiveSection(sectionId);
-    }
-  };
+  const isClickScrolling = useRef(false);
 
   const navItems = [
     { id: "home", label: "Home" },
@@ -26,6 +12,62 @@ const Nav = () => {
     { id: "showcase", label: "Showcase" },
     { id: "experience", label: "Experience" },
   ];
+
+  useEffect(() => {
+    const sectionIds = navItems.map(item => item.id);
+
+    const observerOptions = {
+      root: null,
+      rootMargin: "-20% 0px -60% 0px", // Trigger when section is in upper portion of viewport
+      threshold: 0,
+    };
+
+    const observerCallback = (entries) => {
+      // Don't update during click-triggered scrolling
+      if (isClickScrolling.current) return;
+
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Observe all sections
+    sectionIds.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      // Set flag to prevent observer updates during click scroll
+      isClickScrolling.current = true;
+      setActiveSection(sectionId);
+
+      const offset = 80; // Height of navbar
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+
+      // Reset flag after scroll animation completes
+      setTimeout(() => {
+        isClickScrolling.current = false;
+      }, 1000);
+    }
+  };
 
   return (
     <div className="flex justify-between items-center">

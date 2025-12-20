@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, memo } from "react";
 import { createPortal } from "react-dom";
 import cloud from "../assets/Certificate/cloud.jpg";
 import solidedge from "../assets/Certificate/solidedge.jpg";
@@ -13,7 +13,8 @@ import translatekh from "../assets/Certificate/translatekh.png";
 import asefyls from "../assets/Certificate/asefyls.png";
 import jla from "../assets/Certificate/jla.png";
 import gac from "../assets/Certificate/gac.png";
-const Extracurricular = () => {
+
+const Extracurricular = memo(() => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState([]);
@@ -233,6 +234,8 @@ const Extracurricular = () => {
                     src={item.thumbnail}
                     alt={item.title}
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-violet-900/50 to-purple-900/50">
@@ -282,6 +285,8 @@ const Extracurricular = () => {
                     src={item.thumbnail}
                     alt={item.title}
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-violet-900/50 to-purple-900/50">
@@ -460,6 +465,8 @@ const Extracurricular = () => {
       )}
     </>
   );
-};
+});
+
+Extracurricular.displayName = 'Extracurricular';
 
 export default Extracurricular;

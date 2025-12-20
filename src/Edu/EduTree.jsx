@@ -64,11 +64,11 @@ const EduTree = () => {
     {
       id: 6,
       level: "Self-Learning Projects",
-      institution: "Independent Study",
-      degree: "Self-Taught",
+      institution: "Online Class",
+      degree: "Short Courses & Tutorials",
       field: "Programming / Design / DevOps",
       period: "Ongoing",
-      description: "Add your self-learning journey here",
+      description: "Full Stack Web Development, learn to build and deploy web applications using modern technologies and best practices.",
       color: "from-indigo-500 to-purple-500",
     },
   ];
@@ -85,75 +85,82 @@ const EduTree = () => {
           </div>
         </div>
 
-        {/* Vertical Timeline Line - Center on all screens */}
-        <div className="absolute left-1/2 top-32 lg:top-40 bottom-20 w-1 bg-gradient-to-b from-amber-600 via-amber-500 to-amber-700 transform -translate-x-1/2"></div>
+        {/* Vertical Timeline Line - Hidden on mobile (we'll draw it differently), visible on desktop */}
+        <div className="hidden md:block absolute left-1/2 top-32 lg:top-40 bottom-20 w-1 bg-gradient-to-b from-amber-600 via-amber-500 to-amber-700 transform -translate-x-1/2"></div>
 
         {/* Roadmap Items - Centered on mobile, Alternating on desktop */}
-        <div className="space-y-6 md:space-y-12">
+        <div className="space-y-0 md:space-y-12">
           {educationData.map((edu, index) => {
             const isLeft = index % 2 === 0;
+            const isLast = index === educationData.length - 1;
 
             return (
               <div
                 key={edu.id}
                 className="relative flex items-center justify-center md:justify-between"
               >
-                {/* Mobile Layout - Centered with node in middle */}
-                <div className="md:hidden w-full max-w-md">
-                  <div className="relative flex flex-col items-center">
-                    {/* Timeline Node */}
-                    <div className="relative mb-4">
-                      <div className={`w-6 h-6 rounded-full bg-gradient-to-br ${edu.color} shadow-xl border-2 border-white z-10`}></div>
-                      <div className={`absolute inset-0 w-6 h-6 rounded-full bg-gradient-to-br ${edu.color} animate-ping opacity-40`}></div>
-                    </div>
+                {/* Mobile Layout - Centered vertical timeline */}
+                <div className="md:hidden w-full flex flex-col items-center">
+                  {/* Timeline Node */}
+                  <div className="relative z-10">
+                    <div className={`w-5 h-5 rounded-full bg-gradient-to-br ${edu.color} shadow-xl border-2 border-white`}></div>
+                    <div className={`absolute inset-0 w-5 h-5 rounded-full bg-gradient-to-br ${edu.color} animate-ping opacity-40`}></div>
+                  </div>
 
-                    {/* Content Card */}
-                    <div className="w-full px-4">
-                      <div
-                        className={`relative bg-gradient-to-br ${edu.color} rounded-xl shadow-2xl p-4 cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-2xl`}
-                        onClick={() => toggleBranch(edu.id)}
-                      >
-                        {/* Decorative Corner */}
-                        <div className="absolute top-0 right-0 w-16 h-16 bg-white opacity-10 rounded-bl-full"></div>
+                  {/* Connecting Line from node to card */}
+                  <div className="w-0.5 h-4 bg-gray-600"></div>
 
-                        {/* Content */}
-                        <div className="relative z-10">
-                          <div className="flex items-center justify-between mb-2">
-                            <h3 className="text-lg font-bold text-white">{edu.level}</h3>
-                            <button className="text-white text-2xl font-bold">
-                              {expandedBranches[edu.id] ? "−" : "+"}
-                            </button>
-                          </div>
+                  {/* Content Card */}
+                  <div className="w-full max-w-sm px-4">
+                    <div
+                      className={`relative bg-gradient-to-br ${edu.color} rounded-xl shadow-2xl p-4 cursor-pointer transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]`}
+                      onClick={() => toggleBranch(edu.id)}
+                    >
+                      {/* Decorative Corner */}
+                      <div className="absolute top-0 right-0 w-16 h-16 bg-white opacity-10 rounded-bl-full"></div>
 
-                          <div className="text-white text-opacity-95 space-y-2">
-                            <p className="font-bold text-base">{edu.institution}</p>
-                            <p className="text-xs opacity-90">{edu.period}</p>
+                      {/* Content */}
+                      <div className="relative z-10">
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="text-base font-bold text-white">{edu.level}</h3>
+                          <button className="text-white text-xl font-bold">
+                            {expandedBranches[edu.id] ? "−" : "+"}
+                          </button>
+                        </div>
 
-                            {expandedBranches[edu.id] && (
-                              <div className="mt-3 space-y-2 animate-fadeIn">
-                                <div className="border-t border-white border-opacity-40 pt-2">
-                                  <p className="text-xs font-medium">
-                                    <span className="opacity-80">Degree:</span> {edu.degree}
-                                  </p>
-                                  <p className="text-xs font-medium mt-2">
-                                    <span className="opacity-80">Field:</span> {edu.field}
-                                  </p>
-                                  <p className="text-xs mt-2 italic opacity-95 leading-relaxed">
-                                    {edu.description}
-                                  </p>
-                                </div>
+                        <div className="text-white text-opacity-95 space-y-1">
+                          <p className="font-bold text-sm">{edu.institution}</p>
+                          <p className="text-xs opacity-90">{edu.period}</p>
+
+                          {expandedBranches[edu.id] && (
+                            <div className="mt-3 space-y-2 animate-fadeIn">
+                              <div className="border-t border-white border-opacity-40 pt-2">
+                                <p className="text-xs font-medium">
+                                  <span className="opacity-80">Degree:</span> {edu.degree}
+                                </p>
+                                <p className="text-xs font-medium mt-2">
+                                  <span className="opacity-80">Field:</span> {edu.field}
+                                </p>
+                                <p className="text-xs mt-2 italic opacity-95 leading-relaxed">
+                                  {edu.description}
+                                </p>
                               </div>
-                            )}
-                          </div>
+                            </div>
+                          )}
                         </div>
+                      </div>
 
-                        {/* Emoji Decoration */}
-                        <div className="absolute bottom-2 right-2 text-white text-opacity-30 text-3xl">
-                          {index === 0 ? "🎓" : index === 2 ? "📜" : index === 4 ? "🚀" : "🌟"}
-                        </div>
+                      {/* Emoji Decoration */}
+                      <div className="absolute bottom-2 right-2 text-white text-opacity-30 text-2xl">
+                        {index === 0 ? "🎓" : index === 1 ? "📚" : index === 2 ? "📜" : index === 3 ? "💻" : index === 4 ? "🚀" : "🌟"}
                       </div>
                     </div>
                   </div>
+
+                  {/* Connecting Line to next node (if not last) */}
+                  {!isLast && (
+                    <div className="w-0.5 h-6 bg-gradient-to-b from-gray-600 to-gray-500"></div>
+                  )}
                 </div>
 
                 {/* Desktop Layout - Alternating Left and Right */}
@@ -205,35 +212,35 @@ const EduTree = () => {
                       </div>
 
                       {/* Connecting Line to Timeline */}
-                      <div className="absolute left-[45%] top-1/2 w-[5%] h-0.5 bg-gradient-to-r from-amber-500 to-amber-600"></div>
+                      <div className="absolute left-[45%] top-1/2 w-[5%] h-0.5 bg-gradient-to-r from-amber-500 to-amber-600 hidden md:block"></div>
                     </div>
 
-                    {/* Timeline Dot */}
-                    <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+                    {/* Timeline Dot - Desktop only */}
+                    <div className="hidden md:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
                       <div className="relative">
                         <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${edu.color} shadow-xl border-4 border-white`}></div>
                         <div className={`absolute inset-0 w-8 h-8 rounded-full bg-gradient-to-br ${edu.color} animate-ping opacity-40`}></div>
                       </div>
                     </div>
 
-                    {/* Right Side Empty */}
-                    <div className="w-[45%]"></div>
+                    {/* Right Side Empty - Desktop only */}
+                    <div className="hidden md:block w-[45%]"></div>
                   </>
                 ) : (
                   <>
-                    {/* Left Side Empty */}
-                    <div className="w-[45%]"></div>
+                    {/* Left Side Empty - Desktop only */}
+                    <div className="hidden md:block w-[45%]"></div>
 
-                    {/* Timeline Dot */}
-                    <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+                    {/* Timeline Dot - Desktop only */}
+                    <div className="hidden md:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
                       <div className="relative">
                         <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${edu.color} shadow-xl border-4 border-white`}></div>
                         <div className={`absolute inset-0 w-8 h-8 rounded-full bg-gradient-to-br ${edu.color} animate-ping opacity-40`}></div>
                       </div>
                     </div>
 
-                    {/* Right Side Content */}
-                    <div className="w-[45%]">
+                    {/* Right Side Content - Desktop only */}
+                    <div className="hidden md:block w-[45%]">
                       <div
                         className={`relative bg-gradient-to-br ${edu.color} rounded-2xl shadow-2xl p-6 cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:-translate-y-1`}
                         onClick={() => toggleBranch(edu.id)}
@@ -279,7 +286,7 @@ const EduTree = () => {
                       </div>
 
                       {/* Connecting Line to Timeline */}
-                      <div className="absolute right-[45%] top-1/2 w-[5%] h-0.5 bg-gradient-to-l from-amber-500 to-amber-600"></div>
+                      <div className="absolute right-[45%] top-1/2 w-[5%] h-0.5 bg-gradient-to-l from-amber-500 to-amber-600 hidden md:block"></div>
                     </div>
                   </>
                 )}
@@ -289,9 +296,9 @@ const EduTree = () => {
         </div>
 
         {/* End Node */}
-        <div className="flex justify-center mt-20">
-          <div className="bg-gradient-to-r from-amber-700 to-amber-900 text-white px-8 py-4 rounded-full shadow-2xl">
-            <p className="text-xl font-bold">✨ Continuous Learning Journey ✨</p>
+        <div className="flex justify-center mt-8 md:mt-20">
+          <div className="bg-gradient-to-r from-amber-700 to-amber-900 text-white px-4 md:px-8 py-3 md:py-4 rounded-full shadow-2xl">
+            <p className="text-sm md:text-xl font-bold">✨ Continuous Learning ✨</p>
           </div>
         </div>
       </div>

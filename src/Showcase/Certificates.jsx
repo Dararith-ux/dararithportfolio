@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, memo } from "react";
 import { createPortal } from "react-dom";
 import ReactCert from "../assets/Certificate/React.jpg";
 import PythonGettingStart from "../assets/Certificate/Gettingstartwithpython.jpg";
@@ -6,7 +6,7 @@ import PythonWebData from "../assets/Certificate/pythonaccessweb.jpg";
 import PythonDataStructures from "../assets/Certificate/pythondatastructure.jpg";
 import awscloud from "../assets/Certificate/cloud.jpg";
 import solidedge from "../assets/Certificate/solidedge.jpg";
-const Certificates = () => {
+const Certificates = memo(() => {
   const [selectedCert, setSelectedCert] = useState(null);
   const [visibleCards, setVisibleCards] = useState([]);
   const cardRefs = useRef([]);
@@ -117,6 +117,8 @@ const Certificates = () => {
                 src={cert.thumbnail}
                 alt={cert.title}
                 className={`${cert.rotate ? "rotate-90 min-w-[100%] min-h-[100%] object-cover" : "w-full h-full object-cover"}`}
+                loading="lazy"
+                decoding="async"
                 onError={(e) => {
                   e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23374151' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-size='20' fill='%239CA3AF'%3ECertificate%3C/text%3E%3C/svg%3E";
                 }}
@@ -209,6 +211,8 @@ const Certificates = () => {
       )}
     </>
   );
-};
+});
+
+Certificates.displayName = 'Certificates';
 
 export default Certificates;
