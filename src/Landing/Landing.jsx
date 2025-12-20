@@ -1,162 +1,164 @@
-import React, { useState, useEffect } from "react";
-import { FaCode, FaLaptopCode, FaTerminal, FaCoffee } from "react-icons/fa";
-import { SiVisualstudiocode, SiReact } from "react-icons/si";
+import { useState, useEffect } from "react";
+import { FaCode, FaGithub, FaUser } from "react-icons/fa";
 
 const Landing = ({ onComplete }) => {
-  const [showWelcome, setShowWelcome] = useState(true);
+  const [stage, setStage] = useState(0);
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
-    // Start fade out after 3.5 seconds
-    const fadeTimer = setTimeout(() => {
-      setFadeOut(true);
-    }, 3500);
+    // Animation stages
+    const timers = [
+      setTimeout(() => setStage(1), 300),   // Icons appear
+      setTimeout(() => setStage(2), 1200),  // "Welcome to my" appears
+      setTimeout(() => setStage(3), 2000),  // "Portfolio Website" appears
+      setTimeout(() => setStage(4), 3000),  // Loading bar starts
+      setTimeout(() => setFadeOut(true), 4000), // Start fade out
+      setTimeout(() => onComplete(), 4700), // Complete and show main content
+    ];
 
-    // Complete landing animation after 4 seconds
-    const completeTimer = setTimeout(() => {
-      setShowWelcome(false);
-      onComplete();
-    }, 4000);
-
-    return () => {
-      clearTimeout(fadeTimer);
-      clearTimeout(completeTimer);
-    };
+    return () => timers.forEach(clearTimeout);
   }, [onComplete]);
 
-  const codingIcons = [
-    { Icon: FaCode, delay: "0s", position: "top-[20%] left-[15%]" },
-    { Icon: FaLaptopCode, delay: "0.2s", position: "top-[15%] right-[20%]" },
-    { Icon: SiReact, delay: "0.4s", position: "top-[60%] left-[10%]" },
-    { Icon: FaTerminal, delay: "0.6s", position: "top-[70%] right-[15%]" },
-    { Icon: SiVisualstudiocode, delay: "0.8s", position: "top-[40%] left-[25%]" },
-    { Icon: FaCoffee, delay: "1s", position: "top-[50%] right-[25%]" },
+  const icons = [
+    { Icon: FaCode, color: "text-purple-400", label: "Code" },
+    { Icon: FaGithub, color: "text-white", label: "GitHub" },
+    { Icon: FaUser, color: "text-pink-400", label: "Profile" },
   ];
-
-  if (!showWelcome) return null;
 
   return (
     <div
-      className={`fixed inset-0 bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 z-[100] flex items-center justify-center transition-opacity duration-500 ${
-        fadeOut ? "opacity-0" : "opacity-100"
+      className={`fixed inset-0 z-[100] bg-gray-900 flex flex-col items-center justify-center transition-opacity duration-700 ${
+        fadeOut ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
     >
-      {/* Animated Background Gradient */}
+      {/* Animated background gradient */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse top-10 left-10"></div>
-        <div className="absolute w-96 h-96 bg-pink-500/20 rounded-full blur-3xl animate-pulse bottom-10 right-10" style={{ animationDelay: "1s" }}></div>
-        <div className="absolute w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style={{ animationDelay: "2s" }}></div>
+        <div className="absolute top-1/4 left-1/4 w-72 md:w-96 h-72 md:h-96 bg-purple-600/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-72 md:w-96 h-72 md:h-96 bg-pink-600/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "0.5s" }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 md:w-80 h-64 md:h-80 bg-cyan-600/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
       </div>
 
-      {/* Floating Coding Icons */}
-      {codingIcons.map(({ Icon, delay, position }, index) => (
-        <div
-          key={index}
-          className={`absolute ${position} animate-float-in opacity-0`}
-          style={{ animationDelay: delay, animationFillMode: "forwards" }}
+      {/* Content */}
+      <div className="relative z-10 flex flex-col items-center gap-6 md:gap-10 px-4">
+        {/* Row 1: Icons */}
+        <div className="flex gap-10 md:gap-20">
+          {icons.map(({ Icon, color, label }, index) => (
+            <div
+              key={label}
+              className={`flex flex-col items-center gap-3 transition-all duration-700 ease-out ${
+                stage >= 1
+                  ? "opacity-100 translate-y-0 scale-100"
+                  : "opacity-0 translate-y-10 scale-50"
+              }`}
+              style={{ transitionDelay: `${index * 200}ms` }}
+            >
+              <div
+                className={`${color} text-5xl md:text-7xl lg:text-8xl transition-all duration-500`}
+                style={{
+                  animation: stage >= 1 ? `iconFloat 2.5s ease-in-out infinite` : "none",
+                  animationDelay: `${index * 0.3}s`,
+                }}
+              >
+                <Icon />
+              </div>
+              <span
+                className={`text-gray-400 text-xs md:text-sm font-medium transition-all duration-500 ${
+                  stage >= 1 ? "opacity-100" : "opacity-0"
+                }`}
+                style={{ transitionDelay: `${700 + index * 150}ms` }}
+              >
+                {label}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* Row 2: "Welcome to my" */}
+        <h2
+          className={`text-2xl md:text-4xl lg:text-5xl font-light text-gray-300 transition-all duration-700 ease-out ${
+            stage >= 2
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-8"
+          }`}
         >
-          <Icon className="text-6xl text-purple-400/60" />
+          Welcome to my
+        </h2>
+
+        {/* Row 3: "Portfolio Website" with typing effect dots */}
+        <div className="text-center">
+          <h1
+            className={`text-4xl md:text-6xl lg:text-8xl font-bold transition-all duration-700 ease-out ${
+              stage >= 3
+                ? "opacity-100 translate-y-0 scale-100"
+                : "opacity-0 translate-y-8 scale-95"
+            }`}
+          >
+            <span className="bg-gradient-to-r from-purple-400 via-pink-500 to-yellow-400 bg-clip-text text-transparent">
+              Portfolio Website
+            </span>
+          </h1>
+
+          {/* Animated typing dots */}
+          <div
+            className={`flex justify-center gap-2 mt-4 transition-all duration-500 ${
+              stage >= 3 ? "opacity-100" : "opacity-0"
+            }`}
+            style={{ transitionDelay: "300ms" }}
+          >
+            {[0, 1, 2, 3].map((i) => (
+              <span
+                key={i}
+                className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-gradient-to-r from-purple-400 to-pink-500"
+                style={{
+                  animation: stage >= 3 ? "dotBounce 1.2s ease-in-out infinite" : "none",
+                  animationDelay: `${i * 0.15}s`,
+                }}
+              />
+            ))}
+          </div>
         </div>
-      ))}
 
-      {/* Welcome Text Container */}
-      <div className="relative z-10 text-center">
-        {/* "Welcome" Text */}
-        <h1 className="text-7xl font-bold mb-4 animate-slide-down">
-          <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
-            Welcome
-          </span>
-        </h1>
-
-        {/* Subtitle */}
-        <p className="text-2xl text-white/80 animate-slide-up" style={{ animationDelay: "0.5s", animationFillMode: "backwards" }}>
-          To My Portfolio
-        </p>
-
-        {/* Code Symbol Animation */}
-        <div className="mt-8 flex justify-center gap-4 animate-fade-in" style={{ animationDelay: "1s", animationFillMode: "backwards" }}>
-          <span className="text-5xl text-purple-400 animate-bounce" style={{ animationDelay: "1.2s" }}>&lt;</span>
-          <span className="text-5xl text-pink-400 animate-pulse" style={{ animationDelay: "1.4s" }}>/</span>
-          <span className="text-5xl text-cyan-400 animate-bounce" style={{ animationDelay: "1.6s" }}>&gt;</span>
-        </div>
-
-        {/* Loading Bar */}
-        <div className="mt-12 w-64 h-1 bg-gray-700/50 rounded-full mx-auto overflow-hidden">
-          <div className="h-full bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 animate-loading-bar"></div>
+        {/* Loading progress bar */}
+        <div
+          className={`mt-6 transition-all duration-500 ${
+            stage >= 4 ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <div className="w-56 md:w-72 h-1.5 bg-gray-700/50 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-500 rounded-full transition-all ease-out"
+              style={{
+                width: stage >= 4 ? "100%" : "0%",
+                transitionDuration: "1000ms"
+              }}
+            />
+          </div>
+          <p className="text-gray-500 text-xs md:text-sm mt-3 text-center tracking-wider">
+            Loading experience...
+          </p>
         </div>
       </div>
 
-      {/* CSS Animations */}
+      {/* Animations */}
       <style>{`
-        @keyframes slide-down {
-          from {
-            opacity: 0;
-            transform: translateY(-50px);
+        @keyframes iconFloat {
+          0%, 100% {
+            transform: translateY(0px) rotate(0deg);
           }
-          to {
-            opacity: 1;
-            transform: translateY(0);
+          25% {
+            transform: translateY(-12px) rotate(3deg);
           }
-        }
-
-        @keyframes slide-up {
-          from {
-            opacity: 0;
-            transform: translateY(50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
+          75% {
+            transform: translateY(-8px) rotate(-3deg);
           }
         }
-
-        @keyframes fade-in {
-          from {
-            opacity: 0;
+        @keyframes dotBounce {
+          0%, 100% {
+            transform: translateY(0) scale(1);
           }
-          to {
-            opacity: 1;
+          50% {
+            transform: translateY(-10px) scale(1.2);
           }
-        }
-
-        @keyframes float-in {
-          0% {
-            opacity: 0;
-            transform: translateY(100px) rotate(0deg);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0) rotate(360deg);
-          }
-        }
-
-        @keyframes loading-bar {
-          0% {
-            transform: translateX(-100%);
-          }
-          100% {
-            transform: translateX(100%);
-          }
-        }
-
-        .animate-slide-down {
-          animation: slide-down 0.8s ease-out;
-        }
-
-        .animate-slide-up {
-          animation: slide-up 0.8s ease-out;
-        }
-
-        .animate-fade-in {
-          animation: fade-in 0.8s ease-out;
-        }
-
-        .animate-float-in {
-          animation: float-in 1.5s ease-out;
-        }
-
-        .animate-loading-bar {
-          animation: loading-bar 3s ease-in-out;
         }
       `}</style>
     </div>

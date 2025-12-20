@@ -5,26 +5,27 @@ import { SiTypescript, SiTailwindcss, SiCplusplus } from "react-icons/si";
 
 const Mypf = () => {
   // Clock-like positions: 12 icons spread evenly around (like hours on a clock)
+  // Mobile positions are closer to the image, desktop positions are further out
   const techIcons = [
-    { Icon: FaPython, color: "text-blue-400", position: "top-[-100px] left-[50%] -translate-x-1/2", delay: "0s" },           // 12 o'clock
-    { Icon: FaJsSquare, color: "text-yellow-400", position: "top-[-70px] right-[-90px]", delay: "0.5s" },                     // 1 o'clock
-    { Icon: SiTypescript, color: "text-blue-500", position: "top-[5%] right-[-130px]", delay: "1s" },                         // 2 o'clock
-    { Icon: FaReact, color: "text-cyan-400", position: "top-[35%] right-[-150px]", delay: "1.5s" },                           // 3 o'clock
-    { Icon: FaJava, color: "text-red-500", position: "top-[65%] right-[-130px]", delay: "2s" },                               // 4 o'clock
-    { Icon: FaNode, color: "text-green-500", position: "bottom-[-70px] right-[-90px]", delay: "2.5s" },                       // 5 o'clock
-    { Icon: FaHtml5, color: "text-orange-500", position: "bottom-[-100px] left-[50%] -translate-x-1/2", delay: "3s" },        // 6 o'clock
-    { Icon: FaCss3Alt, color: "text-blue-400", position: "bottom-[-70px] left-[-90px]", delay: "3.5s" },                      // 7 o'clock
-    { Icon: FaGitAlt, color: "text-orange-600", position: "top-[65%] left-[-130px]", delay: "4s" },                           // 8 o'clock
-    { Icon: SiTailwindcss, color: "text-teal-400", position: "top-[35%] left-[-150px]", delay: "4.5s" },                      // 9 o'clock
-    { Icon: SiCplusplus, color: "text-blue-600", position: "top-[5%] left-[-130px]", delay: "5s" },                           // 10 o'clock
-    { Icon: FaDocker, color: "text-blue-500", position: "top-[-70px] left-[-90px]", delay: "5.5s" },                          // 11 o'clock
+    { Icon: FaPython, color: "text-blue-400", position: "top-[-60px] md:top-[-100px] left-[50%] -translate-x-1/2", delay: "0s" },
+    { Icon: FaJsSquare, color: "text-yellow-400", position: "top-[-40px] md:top-[-70px] right-[-50px] md:right-[-90px]", delay: "0.5s" },
+    { Icon: SiTypescript, color: "text-blue-500", position: "top-[5%] right-[-70px] md:right-[-130px]", delay: "1s" },
+    { Icon: FaReact, color: "text-cyan-400", position: "top-[35%] right-[-80px] md:right-[-150px]", delay: "1.5s" },
+    { Icon: FaJava, color: "text-red-500", position: "top-[65%] right-[-70px] md:right-[-130px]", delay: "2s" },
+    { Icon: FaNode, color: "text-green-500", position: "bottom-[-40px] md:bottom-[-70px] right-[-50px] md:right-[-90px]", delay: "2.5s" },
+    { Icon: FaHtml5, color: "text-orange-500", position: "bottom-[-60px] md:bottom-[-100px] left-[50%] -translate-x-1/2", delay: "3s" },
+    { Icon: FaCss3Alt, color: "text-blue-400", position: "bottom-[-40px] md:bottom-[-70px] left-[-50px] md:left-[-90px]", delay: "3.5s" },
+    { Icon: FaGitAlt, color: "text-orange-600", position: "top-[65%] left-[-70px] md:left-[-130px]", delay: "4s" },
+    { Icon: SiTailwindcss, color: "text-teal-400", position: "top-[35%] left-[-80px] md:left-[-150px]", delay: "4.5s" },
+    { Icon: SiCplusplus, color: "text-blue-600", position: "top-[5%] left-[-70px] md:left-[-130px]", delay: "5s" },
+    { Icon: FaDocker, color: "text-blue-500", position: "top-[-40px] md:top-[-70px] left-[-50px] md:left-[-90px]", delay: "5.5s" },
   ];
 
   return (
     <div className="flex justify-center items-center w-full pt-12 md:pt-16 lg:pt-24 relative">
       <div className="absolute w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full bg-gradient-to-r from-purple-600/30 to-pink-600/30 blur-3xl animate-pulse -translate-x-4" />
 
-      <div className="relative scale-80 md:scale-95 lg:scale-105 translate-y-4 -translate-x-4 md:-translate-x-6 lg:-translate-x-8">
+      <div className="relative scale-[0.65] md:scale-95 lg:scale-105 translate-y-4 -translate-x-4 md:-translate-x-6 lg:-translate-x-8">
         {/* Floating Tech Icons */}
         {techIcons.map(({ Icon, color, position, delay }, index) => (
           <div
@@ -35,7 +36,7 @@ const Mypf = () => {
               animationDelay: delay,
             }}
           >
-            <div className={`${color} text-5xl md:text-5xl lg:text-6xl opacity-80 hover:opacity-100 transition-all duration-300 hover:scale-125 cursor-pointer drop-shadow-[0_0_10px_rgba(168,85,247,0.6)]`}>
+            <div className={`${color} text-3xl md:text-5xl lg:text-6xl opacity-80 hover:opacity-100 transition-all duration-300 hover:scale-125 cursor-pointer drop-shadow-[0_0_10px_rgba(168,85,247,0.6)]`}>
               <Icon />
             </div>
           </div>

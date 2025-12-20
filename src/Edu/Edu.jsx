@@ -30,31 +30,53 @@ const Edu = () => {
 
   return (
     <div id="education" className="min-h-[100vh] py-10 md:py-16 lg:py-20 px-4 md:px-8">
+      {/* Title Section - Scale and fade in */}
       <div
         ref={(el) => (elementRefs.current[0] = el)}
-        className={`flex flex-col items-center transition-all duration-700 ${
+        className={`flex flex-col items-center transition-all duration-700 ease-out ${
           visibleElements.includes(0)
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-10"
+            ? "opacity-100 scale-100"
+            : "opacity-0 scale-95"
         }`}
       >
         <Title title="Educational Background" />
         <div className="flex flex-row items-center justify-center gap-2 md:gap-3 pt-2 max-w-4xl">
-          <Lottie animationData={Rocket} className="w-12 md:w-16 lg:w-20 flex-shrink-0" />
-          <p className="text-white text-sm md:text-base lg:text-lg font-normal text-center">
+          <div
+            className={`transition-all duration-500 ${
+              visibleElements.includes(0) ? "opacity-100 rotate-0" : "opacity-0 -rotate-45"
+            }`}
+            style={{ transitionDelay: "200ms" }}
+          >
+            <Lottie animationData={Rocket} className="w-12 md:w-16 lg:w-20 flex-shrink-0" />
+          </div>
+          <p
+            className={`text-white text-sm md:text-base lg:text-lg font-normal text-center transition-all duration-700 ${
+              visibleElements.includes(0) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
+            }`}
+            style={{ transitionDelay: "300ms" }}
+          >
             My journey through knowledge and learning
           </p>
-          <Lottie animationData={Rocket} className="w-12 md:w-16 lg:w-20 flex-shrink-0" />
+          <div
+            className={`transition-all duration-500 ${
+              visibleElements.includes(0) ? "opacity-100 rotate-0" : "opacity-0 rotate-45"
+            }`}
+            style={{ transitionDelay: "200ms" }}
+          >
+            <Lottie animationData={Rocket} className="w-12 md:w-16 lg:w-20 flex-shrink-0" />
+          </div>
         </div>
       </div>
+
+      {/* Education Tree - Slide up with fade */}
       <div
         ref={(el) => (elementRefs.current[1] = el)}
-        className={`mt-8 md:mt-12 lg:mt-16 transition-all duration-700 ${
+        className={`mt-8 md:mt-12 lg:mt-16 transition-all duration-1000 ease-out ${
           visibleElements.includes(1)
             ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-10"
+            : "opacity-0 translate-y-20"
         }`}
-        style={{ transitionDelay: "200ms" }}
+        style={{ transitionDelay: "400ms" }}
       >
         <EduTree />
       </div>
