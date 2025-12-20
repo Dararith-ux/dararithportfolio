@@ -4,8 +4,6 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  // Use repo name for GitHub Pages, '/' for Vercel/localhost
-  base: '/dararithportfolio/',
   plugins: [react(), tailwindcss()],
   build: {
     // Enable minification
