@@ -13,6 +13,7 @@ import translatekh from "../assets/Certificate/translatekh.png";
 import asefyls from "../assets/Certificate/asefyls.png";
 import jla from "../assets/Certificate/jla.png";
 import gac from "../assets/Certificate/gac.png";
+import awen from "../assets/Certificate/awen.jpg";
 
 const Extracurricular = memo(() => {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -148,15 +149,15 @@ const Extracurricular = memo(() => {
       thumbnail: gac,
       images: [gac],
     },
-    // {
-    //   id: 15,
-    //   title: "Pinnacle Entrepreneur Forum Volunteer",
-    //   organization: "ASEAN Women Entrepreneurs Network (AWEN)",
-    //   date: "2025",
-    //   description: "Volunteered as a stage team member at the Pinnacle Entrepreneur Forum organized by ASEAN Women Entrepreneurs Network (AWEN), assisting with stage setup, speaker coordination, and ensuring smooth transitions during presentations and panel discussions.",
-    //   thumbnail: awen,
-    //   images: [awen],
-    // },
+    {
+      id: 15,
+      title: "Pinnacle Entrepreneur Forum Volunteer",
+      organization: "ASEAN Women Entrepreneurs Network (AWEN)",
+      date: "2025",
+      description: "Volunteered as a stage team member at the Pinnacle Entrepreneur Forum organized by ASEAN Women Entrepreneurs Network (AWEN), assisting with stage setup, speaker coordination, and ensuring smooth transitions during presentations and panel discussions.",
+      thumbnail: awen,
+      images: [awen],
+    },
 
   ];
 
