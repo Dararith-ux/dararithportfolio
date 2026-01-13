@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import cloud from "../assets/Certificate/cloud.jpg";
 import solidedge from "../assets/Certificate/solidedge.jpg";
 import sangkran from "../assets/Certificate/sangkran.png";
+import waterfest from "../assets/Certificate/waterfestival.png";
 import mekong from "../assets/Certificate/mekong.png";
 import psd from "../assets/Certificate/psd.png";
 import aunz from "../assets/Certificate/aunz.png";
@@ -55,8 +56,8 @@ const Extracurricular = memo(() => {
       organization: "AUPP & SGA",
       date: "2024",
       description: "Served on the decoration team for the AUPP Water Festival celebration event, helping create traditional Khmer-themed decorations and contributing to the festive atmosphere that honored Cambodian cultural heritage.",
-      thumbnail: sangkran,
-      images: [sangkran],
+      thumbnail: waterfest,
+      images: [waterfest],
     },
     {
       id: 5,
