@@ -156,7 +156,7 @@ const Extracurricular = memo(() => {
       date: "2025",
       description: "Volunteered as a stage team member at the Pinnacle Entrepreneur Forum organized by ASEAN Women Entrepreneurs Network (AWEN), assisting with stage setup, speaker coordination, and ensuring smooth transitions during presentations and panel discussions.",
       thumbnail: awen,
-      images: [awen],
+      images: [awen], 
     },
 
   ];
