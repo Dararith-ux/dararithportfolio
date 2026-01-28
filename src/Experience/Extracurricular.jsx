@@ -15,6 +15,7 @@ import asefyls from "../assets/Certificate/asefyls.png";
 import jla from "../assets/Certificate/jla.png";
 import gac from "../assets/Certificate/gac.png";
 import awen from "../assets/Certificate/awen.jpg";
+import dgf from "../assets/Certificate/DGFCertificate.jpeg";
 
 const Extracurricular = memo(() => {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -158,6 +159,15 @@ const Extracurricular = memo(() => {
       description: "Volunteered as a stage team member at the Pinnacle Entrepreneur Forum organized by ASEAN Women Entrepreneurs Network (AWEN), assisting with stage setup, speaker coordination, and ensuring smooth transitions during presentations and panel discussions.",
       thumbnail: awen,
       images: [awen], 
+    },
+    {
+      id: 16,
+      title: "Digital Government Forum 2025",
+      organization: "Misnistry of Post and Telecommunications & Digital Government Committee",
+      date: "5-7 December 2025",
+      description: "Conference Note Taker for Ministerial Reports (Expert Speeches & Panel Insights)",
+      thumbnail: dgf,
+      images: [dgf], 
     },
 
   ];
