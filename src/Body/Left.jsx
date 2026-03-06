@@ -1,11 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import Button from "../assets/Button/Button";
 import Social from "../assets/Button/Social";
-import { faFacebookF, faLinkedinIn, faTelegramPlane, faTiktok, faXTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faFacebookF, faLinkedinIn, faTelegramPlane } from "@fortawesome/free-brands-svg-icons";
 
 const Left = () => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef(null);
+  const socialItems = [
+    { icon: faFacebookF, href: "https://www.facebook.com/piseth.dararith" },
+    { icon: faTelegramPlane, href: "https://t.me/rithApr" },
+    { icon: faLinkedinIn, href: "https://www.linkedin.com/in/dararith-piseth-050b31352/" },
+  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -65,14 +70,14 @@ const Left = () => {
 
         {/* Social Icons - Pop in with stagger effect */}
         <div className="flex flex-row gap-3 md:gap-5 justify-center lg:justify-start">
-          {[faFacebookF, faTiktok, faTelegramPlane, faXTwitter, faLinkedinIn].map((icon, index) => (
+          {socialItems.map((item, index) => (
             <div
               key={index}
               className={`transform transition-all duration-500 ease-out
                 ${isVisible ? "scale-100 opacity-100" : "scale-0 opacity-0"}`}
               style={{ transitionDelay: isVisible ? `${700 + index * 100}ms` : "0ms" }}
             >
-              <Social app={icon} />
+              <Social app={item.icon} href={item.href} />
             </div>
           ))}
         </div>

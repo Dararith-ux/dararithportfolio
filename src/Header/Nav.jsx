@@ -6,6 +6,16 @@ const Nav = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isClickScrolling = useRef(false);
+  const sectionRoutes = {
+    home: "/",
+    about: "/about",
+    education: "/education",
+    showcase: "/showcase",
+    experience: "/experiences",
+  };
+  const routeToSection = Object.fromEntries(
+    Object.entries(sectionRoutes).map(([sectionId, route]) => [route, sectionId])
+  );
 
   const navItems = [
     { id: "home", label: "Home" },
@@ -72,6 +82,11 @@ const Nav = () => {
       setActiveSection(sectionId);
       setIsMenuOpen(false);
 
+      const targetPath = sectionRoutes[sectionId] || "/";
+      if (window.location.pathname !== targetPath) {
+        window.history.pushState({}, "", targetPath);
+      }
+
       const offset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
@@ -86,6 +101,40 @@ const Nav = () => {
       }, 1000);
     }
   };
+
+  useEffect(() => {
+    const scrollFromPath = () => {
+      const sectionId = routeToSection[window.location.pathname];
+      if (!sectionId) return;
+
+      const element = document.getElementById(sectionId);
+      if (!element) return;
+
+      isClickScrolling.current = true;
+      setActiveSection(sectionId);
+
+      const offset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+
+      setTimeout(() => {
+        isClickScrolling.current = false;
+      }, 1000);
+    };
+
+    const timeoutId = setTimeout(scrollFromPath, 100);
+    window.addEventListener("popstate", scrollFromPath);
+
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener("popstate", scrollFromPath);
+    };
+  }, []);
 
   return (
     <div className="flex justify-between items-center">
