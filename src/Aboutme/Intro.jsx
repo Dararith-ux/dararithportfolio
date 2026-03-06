@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Button from "../assets/Button/Button";
-import MYCV from "../assets/DararithCV.pdf";
+import MYCV from "../assets/Dararith'sCV-AUS2026.pdf";
 import { faDownload, faFile } from "@fortawesome/free-solid-svg-icons";
 
 const Intro = () => {

@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 
+const loadedImageCache = new Set();
+
 const LazyImage = ({
   src,
   alt,
@@ -9,15 +11,19 @@ const LazyImage = ({
   onError,
   ...imgProps
 }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isInView, setIsInView] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(() => loadedImageCache.has(src));
+  const [isInView, setIsInView] = useState(() => loadedImageCache.has(src));
   const imgRef = useRef(null);
 
   useEffect(() => {
-    setIsLoaded(false);
+    const isCached = loadedImageCache.has(src);
+    setIsLoaded(isCached);
+    setIsInView(isCached);
   }, [src]);
 
   useEffect(() => {
+    if (loadedImageCache.has(src)) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -33,7 +39,12 @@ const LazyImage = ({
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [src]);
+
+  const handleLoad = () => {
+    loadedImageCache.add(src);
+    setIsLoaded(true);
+  };
 
   return (
     <div ref={imgRef} className={`relative overflow-hidden ${wrapperClassName}`}>
@@ -51,9 +62,9 @@ const LazyImage = ({
           className={`transition-opacity duration-300 ${
             isLoaded ? "opacity-100" : "opacity-0"
           } ${imgClassName}`}
-          onLoad={() => setIsLoaded(true)}
+          onLoad={handleLoad}
           onError={onError}
-          loading="lazy"
+          loading="eager"
           decoding="async"
           {...imgProps}
         />

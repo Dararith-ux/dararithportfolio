@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useRef, memo } from "react";
 import { createPortal } from "react-dom";
+import LazyImage from "../components/LazyImage";
 import ReactCert from "../assets/Certificate/React.jpg";
 import PythonGettingStart from "../assets/Certificate/Gettingstartwithpython.jpg";
 import PythonWebData from "../assets/Certificate/pythonaccessweb.jpg";
 import PythonDataStructures from "../assets/Certificate/pythondatastructure.jpg";
 import awscloud from "../assets/Certificate/cloud.jpg";
 import solidedge from "../assets/Certificate/solidedge.jpg";
+
+const CERT_THUMBNAIL_FALLBACK =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23374151' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-size='20' fill='%239CA3AF'%3ECertificate%3C/text%3E%3C/svg%3E";
+const CERT_MODAL_FALLBACK =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Crect fill='%23374151' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-size='24' fill='%239CA3AF'%3ECertificate Image%3C/text%3E%3C/svg%3E";
 const Certificates = memo(() => {
   const [selectedCert, setSelectedCert] = useState(null);
   const [visibleCards, setVisibleCards] = useState([]);
@@ -113,14 +119,14 @@ const Certificates = memo(() => {
           >
             {/* Thumbnail Image */}
             <div className="relative h-48 bg-gray-800/50 overflow-hidden flex items-center justify-center">
-              <img
+              <LazyImage
                 src={cert.thumbnail}
                 alt={cert.title}
-                className={`${cert.rotate ? "rotate-90 min-w-[100%] min-h-[100%] object-cover" : "w-full h-full object-cover"}`}
-                loading="lazy"
-                decoding="async"
+                wrapperClassName="absolute inset-0"
+                imgClassName={`${cert.rotate ? "rotate-90 min-w-[100%] min-h-[100%] object-cover" : "w-full h-full object-cover"}`}
+                placeholderClassName="bg-blue-900/30"
                 onError={(e) => {
-                  e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23374151' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-size='20' fill='%239CA3AF'%3ECertificate%3C/text%3E%3C/svg%3E";
+                  e.target.src = CERT_THUMBNAIL_FALLBACK;
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 to-transparent"></div>
@@ -157,13 +163,15 @@ const Certificates = memo(() => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
-              <img
+              <LazyImage
                 src={selectedCert.fullImage}
                 alt={selectedCert.title}
-                className={`w-full h-auto max-h-[60vh] object-contain ${selectedCert.rotate ? "rotate-90" : ""}`}
+                wrapperClassName="w-full min-h-[320px] max-h-[60vh] bg-gray-800 flex items-center justify-center"
+                imgClassName={`w-full h-auto max-h-[60vh] object-contain ${selectedCert.rotate ? "rotate-90" : ""}`}
+                placeholderClassName="bg-blue-900/30"
                 onClick={(e) => e.stopPropagation()}
                 onError={(e) => {
-                  e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Crect fill='%23374151' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-size='24' fill='%239CA3AF'%3ECertificate Image%3C/text%3E%3C/svg%3E";
+                  e.target.src = CERT_MODAL_FALLBACK;
                 }}
               />
 
