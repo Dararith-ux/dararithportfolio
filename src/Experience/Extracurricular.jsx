@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, memo } from "react";
 import { createPortal } from "react-dom";
+import LazyImage from "../components/LazyImage";
 import cloud from "../assets/Certificate/cloud.jpg";
 import solidedge from "../assets/Certificate/solidedge.jpg";
 import sangkran from "../assets/Certificate/sangkran.png";
@@ -242,12 +243,12 @@ const Extracurricular = memo(() => {
               {/* Thumbnail */}
               <div className="w-full h-24 bg-gray-800/50 overflow-hidden">
                 {item.thumbnail ? (
-                  <img
+                  <LazyImage
                     src={item.thumbnail}
                     alt={item.title}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    decoding="async"
+                    wrapperClassName="w-full h-24 bg-gray-800/50"
+                    imgClassName="w-full h-full object-cover"
+                    placeholderClassName="bg-violet-900/40"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-violet-900/50 to-purple-900/50">
@@ -293,12 +294,12 @@ const Extracurricular = memo(() => {
               {/* Thumbnail */}
               <div className="w-48 bg-gray-800/50 flex-shrink-0 overflow-hidden">
                 {item.thumbnail ? (
-                  <img
+                  <LazyImage
                     src={item.thumbnail}
                     alt={item.title}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    decoding="async"
+                    wrapperClassName="w-full h-full bg-gray-800/50"
+                    imgClassName="w-full h-full object-cover"
+                    placeholderClassName="bg-violet-900/40"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-violet-900/50 to-purple-900/50">
@@ -372,10 +373,12 @@ const Extracurricular = memo(() => {
               {/* Image Gallery */}
               {selectedItem.images && selectedItem.images.length > 0 ? (
                 <div className="relative bg-gray-800">
-                  <img
+                  <LazyImage
                     src={selectedItem.images[currentImageIndex]}
                     alt={`${selectedItem.title} - Image ${currentImageIndex + 1}`}
-                    className="w-full h-auto max-h-[50vh] object-contain"
+                    wrapperClassName="w-full min-h-[240px] max-h-[50vh] bg-gray-800 flex items-center justify-center"
+                    imgClassName="w-full h-auto max-h-[50vh] object-contain"
+                    placeholderClassName="bg-violet-900/30"
                   />
 
                   {/* Navigation arrows - only show if multiple images */}

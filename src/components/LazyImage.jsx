@@ -1,9 +1,21 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const LazyImage = ({ src, alt, className, onError, ...props }) => {
+const LazyImage = ({
+  src,
+  alt,
+  wrapperClassName = "",
+  imgClassName = "",
+  placeholderClassName = "",
+  onError,
+  ...imgProps
+}) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(false);
   const imgRef = useRef(null);
+
+  useEffect(() => {
+    setIsLoaded(false);
+  }, [src]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -24,21 +36,26 @@ const LazyImage = ({ src, alt, className, onError, ...props }) => {
   }, []);
 
   return (
-    <div ref={imgRef} className={`relative ${className}`} {...props}>
+    <div ref={imgRef} className={`relative overflow-hidden ${wrapperClassName}`}>
       {!isLoaded && (
-        <div className="absolute inset-0 bg-gray-800/50 animate-pulse" />
+        <div
+          className={`absolute inset-0 animate-pulse ${
+            placeholderClassName || "bg-gray-800/60"
+          }`}
+        />
       )}
       {isInView && (
         <img
           src={src}
           alt={alt}
-          className={`w-full h-full object-cover transition-opacity duration-300 ${
+          className={`transition-opacity duration-300 ${
             isLoaded ? "opacity-100" : "opacity-0"
-          }`}
+          } ${imgClassName}`}
           onLoad={() => setIsLoaded(true)}
           onError={onError}
           loading="lazy"
           decoding="async"
+          {...imgProps}
         />
       )}
     </div>
